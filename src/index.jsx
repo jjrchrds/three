@@ -6,6 +6,7 @@ import '@react-three/fiber'
 import './style.css'
 import { Canvas } from '@react-three/fiber'
 import Button from './components/Button'
+import MovementController from './components/MovementController';
 
 function Floor() {
   return (
@@ -26,6 +27,14 @@ function App() {
           <Floor />
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
+
+          
+			<MovementController
+				hand="left"
+				applyRotation={false}
+				applyHorizontal={true}
+			/>
+
           <Controllers />
           <Button position={[0, 0.8, -1]} />
         </XR>
