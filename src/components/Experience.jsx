@@ -2,6 +2,7 @@ import { extend, useFrame, useThree, useLoader } from "@react-three/fiber";
 import { useRef } from "react";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import * as THREE from "three";
+import { Interactive, XR, Controllers, VRButton, useXR } from "@react-three/xr";
 
 const Experience = () => {
   const Floor = ({ ...props }) => {
@@ -135,6 +136,7 @@ const Experience = () => {
       { scale: 0.25, position: [1.4, 0.1, 2.1] },
       { scale: 0.4, position: [-0.8, 0.1, 2.2] },
       { scale: 0.15, position: [-1, 0.05, 2.6] },
+      { scale: 0.2, position: [-1.3, 0.05, 2.4] },
     ];
 
     return (
@@ -252,6 +254,9 @@ const Experience = () => {
       </group>
     );
   };
+
+  const { player } = useXR();
+  player.position.z = 5;
 
   return (
     <>

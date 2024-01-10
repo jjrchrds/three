@@ -17,17 +17,17 @@ function App() {
   return (
     <>
       <VRButton />
-      <Canvas camera={{ position: [2, 4, 8] }} shadows>
+      <Canvas camera={{ position: [3, 3, 3] }} shadows>
         <OrbitControls />
         <XR>
           <Experience />
 
-          <MovementController applyForward={false} />
+          {/* <MovementController applyForward={false} />
           <MovementController
             hand="left"
             applyRotation={false}
             applyHorizontal={true}
-          />
+          /> */}
 
           <Controllers />
         </XR>
