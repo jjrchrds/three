@@ -9,19 +9,18 @@ import Box from './components/Box'
 import Button from './components/Button'
 import MovementController from './components/MovementController';
 import { OrbitControls } from '@react-three/drei'
+import Experience from './components/Experience'
 
-function Floor({...props}) {
-  return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} {...props}>
-      <planeGeometry args={[40, 40]} />
-      <meshStandardMaterial color="#666" />
-    </mesh>
-  )
-}
+
+import Perampanel from './components/Perampanel'
+
+
+
 
 function App() {
 
   const color = "red";
+
 
   return (
     <>
@@ -29,27 +28,17 @@ function App() {
       <Canvas>
         <OrbitControls />
         <XR>
-          <Sky sunPosition={[0, 1, 0]} />
-          <Floor receiveShadow/>
-          <ambientLight />
-          <pointLight position={[10, 10, 10]} castShadow={true}/>
+          <Experience />
 
-          <Box
-            color={color}
-            // scale={hover ? [1.5, 1.5, 1.5] : [1, 1, 1]}
-            size={[1, 1, 1]}
-            position={[0,1,0]}
-            castShadow
-          />
+
           <MovementController applyForward={false}/>
           <MovementController
             hand="left"
             applyRotation={false}
             applyHorizontal={true}
           />
-
+    
           <Controllers />
-          <Button position={[0, 0.8, -1]} />
         </XR>
       </Canvas>
     </>
