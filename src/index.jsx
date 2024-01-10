@@ -22,12 +22,12 @@ function App() {
         <XR>
           <Experience />
 
-          {/* <MovementController applyForward={false} />
+          <MovementController applyForward={false} />
           <MovementController
             hand="left"
             applyRotation={false}
             applyHorizontal={true}
-          /> */}
+          />
 
           <Controllers />
         </XR>
