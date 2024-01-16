@@ -24,12 +24,27 @@ function Cube({ position, args = [0.06, 0.06, 0.06] }) {
   );
 }
 
+function Ball({ position, args = [0.06, 16, 16] }) {
+  const [sphereRef] = useSphere(() => ({ position, mass: 1, args }));
+  const [tex] = useMatcapTexture("C7C0AC_2E181B_543B30_6B6270");
+
+  return (
+    <Sphere ref={sphereRef} args={args} castShadow>
+      <meshMatcapMaterial attach="material" matcap={tex} />
+    </Sphere>
+  );
+}
+
 function JointCollider({ index, hand }) {
   const { gl } = useThree();
   const handObj = gl.xr.getHand(hand);
   const joint = handObj.joints[joints[index]];
   const size = joint.jointRadius ?? 0.0001;
-  const [tipRef, api] = useSphere(() => ({ args: size, position: [-1, 0, 0] }));
+  console.log(size);
+  const [tipRef, api] = useSphere(() => ({
+    args: [size],
+    position: [-1, 0, 0],
+  }));
   useFrame(() => {
     if (joint === undefined) return;
     api.position.set(joint.position.x, joint.position.y, joint.position.z);
@@ -87,7 +102,7 @@ function Scene() {
         <HandsColliders />
       </HandsReady>
       {[...Array(7)].map((_, i) => (
-        <Cube key={i} position={[0, 1.1 + 0.1 * i, -0.5]} />
+        <Ball key={i} position={[0, 1.1 + 0.1 * i, -0.5]} />
       ))}
       <OrbitControls />
       <ambientLight intensity={0.5} />
