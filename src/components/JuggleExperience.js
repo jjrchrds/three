@@ -24,15 +24,6 @@ function Cube({ position, args = [0.06, 0.06, 0.06] }) {
   );
 }
 
-function Ball({ position, args = [0.06, 0.06, 0.06] }) {
-  const [ballRef] = useSphere(() => ({ position, mass: 1, args }));
-  const [tex] = useMatcapTexture("C7C0AC_2E181B_543B30_6B6270");
-  return (
-    <Sphere ref={ballRef} args={[0.06, 16, 16]} castShadow>
-      <meshMatcapMaterial attach="material" matcap={tex} />
-    </Sphere>
-  );
-}
 function JointCollider({ index, hand }) {
   const { gl } = useThree();
   const handObj = gl.xr.getHand(hand);
@@ -96,7 +87,7 @@ function Scene() {
         <HandsColliders />
       </HandsReady>
       {[...Array(7)].map((_, i) => (
-        <Ball key={i} position={[0, 1.1 + 0.1 * i, -0.5]} />
+        <Cube key={i} position={[0, 1.1 + 0.1 * i, -0.5]} />
       ))}
       <OrbitControls />
       <ambientLight intensity={0.5} />
