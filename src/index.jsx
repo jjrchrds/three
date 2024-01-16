@@ -9,7 +9,8 @@ import Box from "./components/Box";
 import Button from "./components/Button";
 import MovementController from "./components/MovementController";
 import { OrbitControls } from "@react-three/drei";
-import Experience from "./components/Experience";
+import HouseExperience from "./components/HouseExperience";
+import JuggleExperience from "./components/JuggleExperience";
 
 function App() {
   const color = "red";
@@ -20,16 +21,14 @@ function App() {
       <Canvas camera={{ position: [3, 3, 3] }} shadows>
         <OrbitControls />
         <XR>
-          <Experience />
-
-          <MovementController applyForward={false} />
+          <JuggleExperience />
+          {/* <MovementController applyForward={false} />
           <MovementController
             hand="left"
             applyRotation={false}
             applyHorizontal={true}
-          />
-
-          <Controllers />
+          /> */}
+          // <Controllers />
         </XR>
       </Canvas>
     </>

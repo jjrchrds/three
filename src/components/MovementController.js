@@ -78,5 +78,5 @@ export default function MovementController({
       }
     }
   });
-  return <></>;
+  return null;
 }

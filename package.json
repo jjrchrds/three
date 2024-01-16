@@ -12,6 +12,7 @@
     "vite": "^4.5.0"
   },
   "dependencies": {
+    "@react-three/cannon": "^6.6.0",
     "@react-three/drei": "^9.93.0",
     "@react-three/fiber": "8.15",
     "@react-three/xr": "^5.7.1",
