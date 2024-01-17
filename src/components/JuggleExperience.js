@@ -1,7 +1,6 @@
-import { createRoot } from "react-dom/client";
 import React, { useState, useEffect, Fragment } from "react";
 import { Hands, VRButton, XR } from "@react-three/xr";
-import { useThree, useFrame, Canvas } from "@react-three/fiber";
+import { useThree } from "@react-three/fiber";
 import {
   Box,
   OrbitControls,
@@ -11,7 +10,7 @@ import {
   useMatcapTexture,
 } from "@react-three/drei";
 import { usePlane, useBox, Physics, useSphere } from "@react-three/cannon";
-import { joints } from "./joints";
+import JointCollider from "./JointCollider";
 
 function Cube({ position, args = [0.06, 0.06, 0.06] }) {
   const [boxRef] = useBox(() => ({ position, mass: 1, args }));
@@ -31,28 +30,6 @@ function Ball({ position, args = [0.06, 16, 16] }) {
   return (
     <Sphere ref={sphereRef} args={args} castShadow>
       <meshMatcapMaterial attach="material" matcap={tex} />
-    </Sphere>
-  );
-}
-
-function JointCollider({ index, hand }) {
-  const { gl } = useThree();
-  const handObj = gl.xr.getHand(hand);
-  const joint = handObj.joints[joints[index]];
-  const size = joint.jointRadius ?? 0.0001;
-  console.log(size);
-  const [tipRef, api] = useSphere(() => ({
-    args: [size],
-    position: [-1, 0, 0],
-  }));
-  useFrame(() => {
-    if (joint === undefined) return;
-    api.position.set(joint.position.x, joint.position.y, joint.position.z);
-  });
-
-  return (
-    <Sphere ref={tipRef} args={[size]}>
-      <meshBasicMaterial transparent opacity={0} attach="material" />
     </Sphere>
   );
 }
@@ -120,7 +97,7 @@ function Scene() {
 const JuggleExperience = () => (
   <>
     <Physics
-      gravity={[0, -2, 0]}
+      gravity={[0, -9.81, 0]}
       iterations={20}
       defaultContactMaterial={{
         friction: 0.09,
