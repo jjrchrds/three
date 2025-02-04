@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Hands, VRButton, XR } from "@react-three/xr";
+import { Hands } from "@react-three/xr";
 import { useThree } from "@react-three/fiber";
 import {
   Box,
@@ -23,7 +23,7 @@ function Cube({ position, args = [0.06, 0.06, 0.06] }) {
   );
 }
 
-function Ball({ position, args = [0.06, 16, 16] }) {
+function Ball({ position, args = [0.05, 16, 16] }) {
   const [sphereRef] = useSphere(() => ({ position, mass: 1, args }));
   const [tex] = useMatcapTexture("C7C0AC_2E181B_543B30_6B6270");
 
@@ -56,7 +56,7 @@ function HandsReady(props) {
 const HandsColliders = () =>
   [...Array(25)].map((_, i) => (
     <Fragment key={i}>
-      <JointCollider index={i} hand={0} />
+      <JointCollider index={i} hand={0} / >
       <JointCollider index={i} hand={1} />
     </Fragment>
   ));
@@ -68,9 +68,41 @@ function Scene() {
     position: [0, 1, 0],
     type: "Static",
   }));
+
+  const [wallRef1] = usePlane(() => ({
+    args: [5, 2],
+    position: [0, 2, -2.5],
+    type: "Static",
+  }));
+
+  const [wallRef2] = usePlane(() => ({
+    args: [5, 2],
+    rotation: [0, Math.PI * 0.5, 0],
+    position: [-2.5, 2, 0],
+    type: "Static",
+  }));
+
+  const [wallRef3] = usePlane(() => ({
+    args: [5, 2],
+    rotation: [0, Math.PI, 0],
+    position: [0, 2, 2.5],
+    type: "Static",
+  }));
   return (
     <>
       <Sky />
+
+      <Plane ref={wallRef1} args={[5, 2]} receiveShadow castShadow>
+        <meshStandardMaterial attach="material" color="#ff0000" />
+      </Plane>
+      <Plane ref={wallRef2} args={[5, 2]} receiveShadow castShadow>
+        <meshStandardMaterial attach="material" color="#ff0000" />
+      </Plane>
+
+      <Plane ref={wallRef3} args={[5, 2]} receiveShadow castShadow>
+        <meshStandardMaterial attach="material" color="#ff0000" />
+      </Plane>
+
       <Plane ref={floorRef} args={[10, 10]} receiveShadow>
         <meshStandardMaterial attach="material" color="#fff" />
       </Plane>
@@ -82,14 +114,8 @@ function Scene() {
         <Ball key={i} position={[0, 1.1 + 0.1 * i, -0.5]} />
       ))}
       <OrbitControls />
-      <ambientLight intensity={0.5} />
-      <spotLight
-        position={[1, 8, 1]}
-        angle={0.3}
-        penumbra={1}
-        intensity={1}
-        castShadow
-      />
+      <ambientLight intensity={1} />
+      <directionalLight castShadow position={[0, 10, 0]} intensity={1.25} />
     </>
   );
 }
